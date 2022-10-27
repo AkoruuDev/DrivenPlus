@@ -1,5 +1,5 @@
-export default function Main() {
+export default function Main({ children }) {
     return(
-        <></>
+        <>{ children }</>
     )
 }
