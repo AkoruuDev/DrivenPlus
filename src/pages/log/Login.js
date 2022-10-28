@@ -10,6 +10,7 @@ export default function Login() {
                 <Input type="password" name="password" placeholder="Senha" />
                 <Button>ENTRAR</Button>
             </Form>
+            <Register>Não possuí uma conta? Cadastre-se</Register>
         </Container>
     )
 }
@@ -60,10 +61,21 @@ const Input = styled.input`
 const Button = styled.button`
     width: 100%;
     height: 52px;
-    margin-top: 24px;
+    margin: 24px 0;
     border-radius: 8px;
     background-color: #FF4791;
     color: #fafafa;
     font-weight: 700;
     font-family: 'Roboto', sans-serif;
+`
+
+const Register = styled.p`
+    color: #FFFFFF;
+    font-size: 14px;
+    text-decoration: underline;
+    font-style: italic;
+
+    &:hover {
+        color: #1F87EE;
+    }
 `
