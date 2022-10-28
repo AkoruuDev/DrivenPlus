@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo-name.svg";
 
 export default function Login() {
+    const navigate = useNavigate();
+
     return(
         <Container>
             <Image src={logo} alt="logo"/>
@@ -10,7 +13,7 @@ export default function Login() {
                 <Input type="password" name="password" placeholder="Senha" />
                 <Button>ENTRAR</Button>
             </Form>
-            <Register>Não possuí uma conta? Cadastre-se</Register>
+            <Register onClick={() => navigate('/sign-up')}>Não possuí uma conta? Cadastre-se</Register>
         </Container>
     )
 }
