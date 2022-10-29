@@ -34,7 +34,12 @@ export default function Login() {
                         membership: res.data.membership,
                         token: res.data.token
                     });
-                    navigate("/subscriptions");
+
+                    if (user.membership === null) {
+                        navigate("/subscriptions");    
+                    } else {
+                        navigate("/home");
+                    }
                 })
                 .catch(() => console.log("Deu Ruim"))
         }
