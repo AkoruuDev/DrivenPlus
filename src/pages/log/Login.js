@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo-name.svg";
 import { signIn } from "../../services/API";
+import { AuthContext } from "../../provider/auth";
 
 export default function Login() {
     const [login, setLogin] = useState([]);
-    const [send, setSend] = useState(false)
+    const [send, setSend] = useState(false);
+    const { user, setUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     function makeLogin({ value, name }) {
@@ -24,12 +26,22 @@ export default function Login() {
     useEffect(() => {
         if(send) {
             signIn(login)
-                .then(res => console.log(res.data))
+                .then(res => {
+                    console.log(res.data);
+                    setUser({
+                        ...user,
+                        name: res.data.name,
+                        membership: res.data.membership,
+                        token: res.data.token
+                    });
+                    navigate("/subscriptions");
+                })
                 .catch(() => console.log("Deu Ruim"))
         }
     }, [send]);
 
-    console.log(login)
+    console.log(login);
+    console.log(user);
     return(
         <Container>
             <Image src={logo} alt="logo"/>
