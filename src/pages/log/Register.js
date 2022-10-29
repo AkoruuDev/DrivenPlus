@@ -1,19 +1,68 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo-name.svg";
+import { signUp } from "../../services/API";
 
 export default function Register() {
+    const [register, setRegister] = useState([]);
+    const [send, setSend] = useState(false);
     const navigate = useNavigate();
 
+    function createRegister({ value, name }) {
+        setRegister({
+          ...register,
+          [name]: value,
+        });
+    }
+
+    useEffect(() => {
+        if (send) {
+            signUp(register)
+                .then(res => console.log(res.data))
+                .catch(err => console.log(err))
+        }
+    }, [send])
+
+    function submitThis(event) {
+        event.preventDefault();
+        setSend(true)
+    }
+
+    console.log(register)
     return(
         <Container>
             <Image src={logo} alt="logo"/>
-            <Form>
-                <Input type="text" name="name" placeholder="Nome" />
-                <Input type="text" name="cpf" placeholder="CPF" />
-                <Input type="email" name="email" placeholder="E-mail" />
-                <Input type="password" name="password" placeholder="Senha" />
-                <Button>CADASTRAR</Button>
+            <Form onSubmit={submitThis}>
+                <Input type="text" name="name" onChange=
+                    {(e) => createRegister({
+                            name: e.target.name,
+                            value: e.target.value
+                        })
+                    }
+                placeholder="Nome" />
+                <Input type="text" name="cpf" onChange=
+                    {(e) => createRegister({
+                            name: e.target.name,
+                            value: e.target.value
+                        })
+                    }
+                placeholder="CPF" />
+                <Input type="email" name="email" onChange=
+                    {(e) => createRegister({
+                            name: e.target.name,
+                            value: e.target.value
+                        })
+                    }
+                placeholder="E-mail" />
+                <Input type="password" name="password" onChange=
+                    {(e) => createRegister({
+                            name: e.target.name,
+                            value: e.target.value
+                        })
+                    }
+                placeholder="Senha" />
+                <Button type="submit">CADASTRAR</Button>
             </Form>
             <Login onClick={() => navigate('/')}>Já possuí uma conta? Entre</Login>
         </Container>
