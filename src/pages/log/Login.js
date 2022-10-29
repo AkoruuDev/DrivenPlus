@@ -1,17 +1,54 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo-name.svg";
+import { signIn } from "../../services/API";
 
 export default function Login() {
+    const [login, setLogin] = useState([]);
+    const [send, setSend] = useState(false)
     const navigate = useNavigate();
 
+    function makeLogin({ value, name }) {
+        setLogin({
+          ...login,
+          [name]: value,
+        });
+    }
+
+    function submitThis(event) {
+        event.preventDefault();
+        setSend(true)
+    }
+
+    useEffect(() => {
+        if(send) {
+            signIn(login)
+                .then(res => console.log(res.data))
+                .catch(() => console.log("Deu Ruim"))
+        }
+    }, [send]);
+
+    console.log(login)
     return(
         <Container>
             <Image src={logo} alt="logo"/>
-            <Form>
-                <Input type="email" name="email" placeholder="E-mail" />
-                <Input type="password" name="password" placeholder="Senha" />
-                <Button>ENTRAR</Button>
+            <Form onSubmit={submitThis}>
+                <Input type="email" name="email" onChange=
+                    {(e) => makeLogin({
+                            name: e.target.name,
+                            value: e.target.value
+                        })
+                    }
+                placeholder="E-mail" />
+                <Input type="password" name="password" onChange=
+                    {(e) => makeLogin({
+                            name: e.target.name,
+                            value: e.target.value
+                        })
+                    }
+                placeholder="Senha" />
+                <Button type="submit">ENTRAR</Button>
             </Form>
             <Register onClick={() => navigate('/sign-up')}>Não possuí uma conta? Cadastre-se</Register>
         </Container>
