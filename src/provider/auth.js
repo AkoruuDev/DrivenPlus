@@ -5,7 +5,6 @@ export const AuthContext = React.createContext({});
 export const AuthProvider = (props) => {
     const [user, setUser] = useState({
         name: '',
-        image: '',
         membership: {},
         token: ''
     })
