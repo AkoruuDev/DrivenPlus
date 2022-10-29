@@ -1,10 +1,13 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { planList } from "../../services/API"
 import { AuthContext } from "../../provider/auth"
 
-function Sub() {
+function Sub({ sub }) {
     return(
-        <></>
+        <>
+            <img src={sub.image} alt={`plan${sub.id}`} />
+            <p>{sub.price}</p>
+        </>
     )
 }
 
@@ -13,13 +16,18 @@ export default function Subscription() {
     const { user } = useContext(AuthContext);
     console.log(user);
 
-    planList(user.token)
-        .then(res => console.log(res.data))
+    useEffect(() => {
+        planList(user.token)
+        .then(res => {
+            console.log(res.data);
+            setPlans(res.data)
+        })
         .catch(() => console.log("Deu Ruim"))
+    }, [])
     return(
         <>
             Escolha seu Plano
-            <>{plans?.map(sub => <Sub />)}</>
+            <>{plans?.map(sub => <Sub key={sub.id} sub={sub}/>)}</>
         </>
     )
 }
