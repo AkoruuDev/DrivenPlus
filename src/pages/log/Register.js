@@ -19,7 +19,10 @@ export default function Register() {
     useEffect(() => {
         if (send) {
             signUp(register)
-                .then(res => console.log(res.data))
+                .then(res => {
+                    console.log(res.data)
+                    navigate("/")
+                })
                 .catch(err => console.log(err))
         }
     }, [send])
