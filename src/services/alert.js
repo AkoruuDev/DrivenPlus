@@ -33,7 +33,7 @@ function Alert({ message, confirmMessage, secButton, action }) {
             <ConfirmBox>
                 <Button onClick={() => action()}>{confirmMessage}</Button>
                 {secButton.show ?
-                    <Button secBut={secButton.show} onClick={() => secButton.action}>{secButton.message}</Button> :
+                    <Button secBut={secButton.show} onClick={() => secButton.action()}>{secButton.message}</Button> :
                     ""
                 }
             </ConfirmBox>
