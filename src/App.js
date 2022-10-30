@@ -21,7 +21,7 @@ export default function App() {
                         <Route path="/sign-up" element={ <Register /> } />
                         <Route path="/home" element={ <Home /> } />
                         <Route path="/subscriptions" element={ <Subscription /> } />
-                        <Route path="   " element={ <Plan /> } />
+                        <Route path="/subscriptions/:PLAN_ID" element={ <Plan /> } />
                     </Routes>
                 </Main>
             </BrowserRouter>
