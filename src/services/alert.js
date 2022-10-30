@@ -83,13 +83,13 @@ const Button = styled.div`
     padding: 8px 12px;
     margin: 8px;
     border-radius: 12px;
-    background-color: ${props => props.secBut ? '#99WFFFF' : '#E9E9E9'};
+    background-color: ${props => props.secBut ? '#FF44FF' : '#E9E9E9'};
 
     display: flex;
     justify-content: center;
 
     &:hover {
         cursor: pointer;
-        background-color: #f1f1f1;
+        background-color: ${props => props.secBut ? '#FF64FF' : '#F1F1F1'};
     }
 `
