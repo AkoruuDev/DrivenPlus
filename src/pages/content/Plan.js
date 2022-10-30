@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
+import styled from "styled-components";
 import { AuthContext } from "../../provider/auth";
 import { showPlan } from "../../services/API";
 
@@ -17,22 +18,64 @@ export default function Plan() {
     }, [])
     
     if (plan === undefined) {
-        return(<>Loading...</>)
+        return(<Container><Title>Loading...</Title></Container>)
     }
 
     return(
         <>
             {plan !== {} ?
-                <>
-                    {console.log(plan)}
+                <Container>
                     <img src={plan.image} alt="logo"/>
-                    <h1>{plan.name}</h1>
-                    <h2>Benefícios:</h2>
-                    {plan.perks.map((perk, i) => <p key={i}>{i + 1}. {perk.title}</p>)} {/* Linha com erro */}
-                    <h2>Preço:</h2>
-                    <p>R$ {plan.price} cobrados mensalmente</p>
-                </>
+                    <Title>{plan.name}</Title>
+                    <InfoBox>
+                        <InfoTitle>Benefícios:</InfoTitle>
+                        {plan.perks.map((perk, i) => <Text key={i}>{i + 1}. {perk.title}</Text>)}
+                        <InfoTitle>Preço:</InfoTitle>
+                        <Text>R$ {plan.price} cobrados mensalmente</Text>
+                    </InfoBox>
+                </Container>
             : ""}
         </>
     )
 }
+
+const Container = styled.div`
+    width: 100vw;
+    height: 100vh;
+    padding: 25px 0;
+    background-color: #0e0e13;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`
+
+const Title = styled.h1`
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+`
+
+const InfoBox = styled.div`
+    margin: 18px 0;
+`
+
+const InfoTitle = styled.p`
+    width: 70vw;
+    margin: 8px 0;
+    font-size: 16px;
+    color: white;
+`
+
+const Text = styled.p`
+    margin-left: 8px;
+    font-size: 14px;
+    color: white;
+`
