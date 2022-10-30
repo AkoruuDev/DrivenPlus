@@ -6,8 +6,12 @@ import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 function Sub({ sub }) {
+    const navigate = useNavigate();
+
     return(
-        <Box>
+        <Box onClick={() => {
+            navigate(`/subscriptions/${sub.id}`)        
+        }}>
             <Image src={sub.image} alt={`plan${sub.id}`} />
             <Price>{sub.price}</Price>
         </Box>
