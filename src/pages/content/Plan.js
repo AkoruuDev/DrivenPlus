@@ -25,7 +25,7 @@ export default function Plan() {
         <>
             {plan !== {} ?
                 <Container>
-                    <img src={plan.image} alt="logo"/>
+                    <Image src={plan.image} alt="logo"/>
                     <Title>{plan.name}</Title>
                     <InfoBox>
                         <InfoTitle>Benefícios:</InfoTitle>
@@ -55,6 +55,11 @@ const Container = styled.div`
     &::-webkit-scrollbar {
         display: none;
     }
+`
+
+const Image = styled.img`
+    height: 95px;
+    margin: 12px;
 `
 
 const Title = styled.h1`
