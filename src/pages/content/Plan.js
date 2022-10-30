@@ -33,6 +33,15 @@ export default function Plan() {
                         <InfoTitle>Preço:</InfoTitle>
                         <Text>R$ {plan.price} cobrados mensalmente</Text>
                     </InfoBox>
+                    <Form>
+                        <Input type="text" name="buyerName" placeholder="nome impresso no cartão" />
+                        <Input type="text" name="buyerName" placeholder="Digitos do cartão" />
+                        <div>
+                            <Input type="text" name="buyerName" placeholder="CVV" />
+                            <Input type="text" name="buyerName" placeholder="Validade" />
+                        </div>
+                        <Button>ASSINAR</Button>
+                    </Form>
                 </Container>
             : ""}
         </>
@@ -83,4 +92,40 @@ const Text = styled.p`
     margin-left: 8px;
     font-size: 14px;
     color: white;
+`
+
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+
+    & div {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        & input {
+            width: 48%;
+        }
+    }
+`
+
+const Input = styled.input`
+    margin: 4px 0;
+    height: 52px;
+    border-radius: 8px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    border: 1px solid white;
+`
+
+const Button = styled.button`
+    margin: 8px 0;
+    height: 52px;
+    border-radius: 8px;
+    background-color: #FF55FF;
+    box-sizing: border-box;
+    border: none;
+    color: white;
+    font-weight: 700;
 `
