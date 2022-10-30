@@ -35,7 +35,7 @@ export default function Login() {
                         token: res.data.token
                     });
 
-                    if (user.membership === null) {
+                    if (res.data.membership === null) {
                         navigate("/subscriptions");    
                     } else {
                         navigate("/home");
