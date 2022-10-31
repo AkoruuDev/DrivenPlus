@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { AuthContext } from "../../provider/auth";
 import { showPlan, subscribePlan } from "../../services/API";
 import arrow from "../../assets/arrow.svg";
+import money from "../../assets/money.svg";
+import list from "../../assets/list.svg";
 
 export default function Plan() {
     const { PLAN_ID } = useParams();
@@ -57,9 +59,9 @@ export default function Plan() {
                     <Image src={plan.image} alt="logo"/>
                     <Title>{plan.name}</Title>
                     <InfoBox>
-                        <InfoTitle>Benefícios:</InfoTitle>
+                        <TitleBox><img src={list} alt="list"/><InfoTitle>Benefícios:</InfoTitle></TitleBox>
                         {plan.perks.map((perk, i) => <Text key={i}>{i + 1}. {perk.title}</Text>)}
-                        <InfoTitle>Preço:</InfoTitle>
+                        <TitleBox><img src={money} alt="money"/><InfoTitle>Preço:</InfoTitle></TitleBox>
                         <Text>R$ {plan.price} cobrados mensalmente</Text>
                     </InfoBox>
                     <Form onSubmit={submitThis}>
@@ -142,7 +144,7 @@ const InfoBox = styled.div`
 
 const InfoTitle = styled.p`
     width: 70vw;
-    margin: 8px 0;
+    margin: 8px;
     font-size: 16px;
     color: white;
 `
@@ -187,4 +189,8 @@ const Button = styled.button`
     border: none;
     color: white;
     font-weight: 700;
+`
+
+const TitleBox = styled.div`
+    display: flex;
 `
