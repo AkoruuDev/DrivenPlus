@@ -5,12 +5,12 @@
 - akoruu.dev@gmail.com
 
 #### Technologies
-> React
-> HTML5
-> CSS3
-> Styled-Components
-> React-Router-Dom
-> Axios
+> <p>React</p>
+> <p>HTML5</p>
+> <p>CSS3</p>
+> <p>Styled-Components</p>
+> <p>React-Router-Dom</p>
+> <p>Axios</p>
 
 #### Time
 ###### Start date
