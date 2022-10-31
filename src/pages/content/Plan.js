@@ -6,6 +6,7 @@ import { showPlan, subscribePlan } from "../../services/API";
 import arrow from "../../assets/arrow.svg";
 import money from "../../assets/money.svg";
 import list from "../../assets/list.svg";
+import AlertBOX from "../../services/alert";
 
 export default function Plan() {
     const { PLAN_ID } = useParams();
@@ -14,6 +15,15 @@ export default function Plan() {
     const [send, setSend] = useState(false);
     const [sub, setSub] = useState({membershipId: Number(PLAN_ID)});
     const navigate = useNavigate();
+
+    // ---------------------------------------------
+    const [show, setShow] = useState(false);
+    const [info, setInfo] = useState('');
+    const [confirmMessage, setConfirmMessage] = useState('');
+    const [action, setAction] = useState();
+    const [doAction, setDoAction] = useState()
+    const [secButton, setSecButton] = useState({});
+    // ---------------------------------------------
 
     useEffect(() => {
         showPlan(PLAN_ID, user.token)
@@ -30,7 +40,20 @@ export default function Plan() {
                     console.log(res.data)
                     navigate('/');
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err)
+                    // ---------------------------------------------
+                    setInfo('Ops... Acho que deu algum problema no seu pedido');
+                    setConfirmMessage('Tudo bem, vou tentar de novo');
+                    setDoAction(() => setShow(false))
+                    setAction(doAction)
+                    setSecButton({
+                        ...secButton,
+                        show: false
+                    });
+                    setShow(true);
+                    // --------------------------------------------- 
+                })
         }
     }, [send])
 
@@ -43,7 +66,18 @@ export default function Plan() {
 
     function submitThis(event) {
         event.preventDefault();
-        setSend(true)
+        // ---------------------------------------------
+        setInfo(`Tem certeza que deseja assinar o plano ${plan.name} (${plan.price})?`);
+        setConfirmMessage('SIM');
+        setAction(() => setSend(true))
+        setSecButton({
+            ...secButton,
+            show: true,
+            action: () => setShow(false),
+            message: 'NÃO'
+        });
+        setShow(true);
+        // --------------------------------------------- 
     }
     
     if (plan === undefined) {
@@ -97,6 +131,7 @@ export default function Plan() {
                         </div>
                         <Button type="submit">ASSINAR</Button>
                     </Form>
+                    <Background show={show}><AlertBOX show={show} action={action} info={info} confirmMessage={confirmMessage} secButton={secButton} /><Close onClick={() => setShow(false)}>x</Close></Background>
                 </Container>
             : ""}
         </>
@@ -193,4 +228,24 @@ const Button = styled.button`
 
 const TitleBox = styled.div`
     display: flex;
+`
+
+const Background = styled.div`
+    height: 100vh;
+    width: 100vw;
+    background-color: #00000086;
+
+    display: ${props => props.show ? 'block' : 'none'};
+
+    position: fixed;
+    top: 0;
+    left: 0;
+`
+
+const Close = styled.div`
+    position: fixed;
+    top: 4vh;
+    right: 14vw;
+    font-size: 34px;
+    color: white;
 `
