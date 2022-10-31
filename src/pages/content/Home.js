@@ -10,7 +10,7 @@ export default function Home() {
 
     return(
         <>
-            <Header />
+            <Header logo={user.membership.image} />
             <Container>
                 <Title>Olá, {user.name}</Title>
                 <Content>
@@ -31,7 +31,7 @@ function Box({ e }) {
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
-    padding: 25px 0;
+    padding: 80px 0;
     background-color: #0e0e13;
 
     display: flex;
