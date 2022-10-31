@@ -36,6 +36,10 @@ export default function Plan() {
         if (send) {
             subscribePlan(sub, user.token)
                 .then(res => {
+                    setUser({
+                        ...user,
+                        membership: res.data.membership
+                    })
                     navigate('/home');
                 })
                 .catch(err => {
