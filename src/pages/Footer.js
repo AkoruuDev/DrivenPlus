@@ -1,11 +1,28 @@
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { AuthContext } from "../provider/auth";
+import { cancelPlan } from "../services/API";
 
 export default function Footer() {
+    const [send, setSend] = useState();
+    const { user } = useContext(AuthContext)
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (send) {
+            cancelPlan(user.token)
+                .then(() => {
+                    navigate('/subscriptions')
+                })
+        }
+    }, [send])
+
     return(
         <Container>
             <Content>
-                <Button>Mudar Plano</Button>
-                <Button cancel={true}>Cancelar Plano</Button>
+                <Button onClick={() => navigate('/subscriptions')}>Mudar Plano</Button>
+                <Button cancel={true} onClick={() => setSend(true)}>Cancelar Plano</Button>
             </Content>
         </Container>
     )
