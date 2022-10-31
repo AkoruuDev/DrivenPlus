@@ -5,9 +5,11 @@ import logo from "../../assets/logo-name.svg";
 import { signIn } from "../../services/API";
 import { AuthContext } from "../../provider/auth";
 import AlertBOX from "../../services/alert";
-import { getItem, setItem } from "../../provider/localStorage";
+import { setItem } from "../../provider/localStorage";
+import UserContext from "../../provider/UserContext";
 
 export default function Login() {
+	const { setAndPersistToken } = useContext(UserContext);
     const [login, setLogin] = useState([]);
     const [send, setSend] = useState(false);
     const { user, setUser } = useContext(AuthContext);
@@ -45,6 +47,7 @@ export default function Login() {
                     });
 
                     setItem('ContextStorage', user);
+        			setAndPersistToken(res.data.token);
 
                     if (res.data.membership === null) {
                         navigate("/subscriptions");    
