@@ -5,6 +5,7 @@ import logo from "../../assets/logo-name.svg";
 import { signIn } from "../../services/API";
 import { AuthContext } from "../../provider/auth";
 import AlertBOX from "../../services/alert";
+import { getItem, setItem } from "../../provider/localStorage";
 
 export default function Login() {
     const [login, setLogin] = useState([]);
@@ -42,6 +43,8 @@ export default function Login() {
                         membership: res.data.membership,
                         token: res.data.token
                     });
+
+                    setItem('ContextStorage', user);
 
                     if (res.data.membership === null) {
                         navigate("/subscriptions");    
