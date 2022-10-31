@@ -36,7 +36,6 @@ export default function Login() {
         if(send) {
             signIn(login)
                 .then(res => {
-                    console.log(res.data);
                     setUser({
                         ...user,
                         name: res.data.name,
@@ -51,7 +50,6 @@ export default function Login() {
                     }
                 })
                 .catch(() => {
-                    console.log("Deu Ruim")
                     // ---------------------------------------------
                     setInfo('Ops! Parece que não conseguimos conectar você no site...');
                     setConfirmMessage('Tudo bem, vou tentar de novo');
@@ -68,8 +66,6 @@ export default function Login() {
         }
     }, [send]);
 
-    console.log(login);
-    console.log(user);
     return(
         <Container>
             <Image src={logo} alt="logo"/>

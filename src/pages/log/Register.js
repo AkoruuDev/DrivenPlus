@@ -29,11 +29,9 @@ export default function Register() {
         if (send) {
             signUp(register)
                 .then(res => {
-                    console.log(res.data)
                     navigate("/")
                 })
                 .catch(err => {
-                    console.log(err)
                     // ---------------------------------------------
                     setInfo('Ops! Parece que não conseguimos cadastrar você no Driven+ ...');
                     setConfirmMessage('Tudo bem, vou tentar de novo');
@@ -55,7 +53,6 @@ export default function Register() {
         setSend(true)
     }
 
-    console.log(register)
     return(
         <Container>
             <Image src={logo} alt="logo"/>

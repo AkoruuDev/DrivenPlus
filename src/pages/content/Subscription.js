@@ -21,7 +21,6 @@ function Sub({ sub }) {
 export default function Subscription() {
     const [plans, setPlans] = useState([])
     const { user } = useContext(AuthContext);
-    console.log(user);
     const navigate = useNavigate();
 
     // ---------------------------------------------
@@ -43,11 +42,9 @@ export default function Subscription() {
     useEffect(() => {
         planList(user.token)
         .then(res => {
-            console.log(res.data);
             setPlans(res.data)
         })
         .catch(() => {
-            console.log("Deu Ruim")
             // ---------------------------------------------
             setInfo('Ops! Parece que não conseguimos conectar você com os planos...');
             setConfirmMessage('Tudo bem, vou tentar de novo');

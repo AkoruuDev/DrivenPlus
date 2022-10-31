@@ -29,18 +29,16 @@ export default function Plan() {
             .then(res => {
                 setPLan(res.data);
             })
-            .catch(err => console.log(err))
+            .catch()
     }, [])
 
     useEffect(() => {
         if (send) {
             subscribePlan(sub, user.token)
                 .then(res => {
-                    console.log(res.data)
                     navigate('/home');
                 })
                 .catch(err => {
-                    console.log(err)
                     // ---------------------------------------------
                     setInfo('Ops... Acho que deu algum problema no seu pedido');
                     setConfirmMessage('Tudo bem, vou tentar de novo');
@@ -82,7 +80,6 @@ export default function Plan() {
         return(<Container><Title>Loading...</Title></Container>)
     }
 
-    console.log(sub)
     return(
         <>
             {plan !== {} ?
