@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components";
 import { AuthContext } from "../../provider/auth";
 import { showPlan, subscribePlan } from "../../services/API";
+import arrow from "../../assets/arrow.svg";
 
 export default function Plan() {
     const { PLAN_ID } = useParams();
@@ -52,6 +53,7 @@ export default function Plan() {
         <>
             {plan !== {} ?
                 <Container>
+                    <Arrow src={arrow} alt="arrow" onClick={() => navigate('/subscriptions')} />
                     <Image src={plan.image} alt="logo"/>
                     <Title>{plan.name}</Title>
                     <InfoBox>
@@ -115,6 +117,12 @@ const Container = styled.div`
     &::-webkit-scrollbar {
         display: none;
     }
+`
+
+const Arrow = styled.img`
+    position: fixed;
+    top: 4vh;
+    left: 10vw;
 `
 
 const Image = styled.img`
