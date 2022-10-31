@@ -2,7 +2,7 @@
 
 Projeto com a proposta de criar uma aplicação completa que possibilita a assinatura de um serviço online, o Driven Plus!
 
-<a href="#"><img width="600" src="https://github.com/AkoruuDev/AkoruuDev/blob/main/src/READMEs/acessar.png"></a>
+<a href="https://drivenplus-khaki.vercel.app/"><img width="600" src="https://github.com/AkoruuDev/AkoruuDev/blob/main/src/READMEs/acessar.png"></a>
 
 ### Tecnologias usadas
 <div style="display: inline_block"><br>
@@ -46,6 +46,6 @@ Projeto com a proposta de criar uma aplicação completa que possibilita a assin
 
 > Metadados
 <br>
-<a href="#" ><img height="150px" src="https://github.com/AkoruuDev/AkoruuDev/blob/main/src/READMEs/metadados.png" /></a>
+<a href="./docs/database.md" ><img height="150px" src="https://github.com/AkoruuDev/AkoruuDev/blob/main/src/READMEs/metadados.png" /></a>
 
 </div>
