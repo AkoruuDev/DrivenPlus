@@ -4,12 +4,21 @@ import styled from "styled-components";
 import logo from "../../assets/logo-name.svg";
 import { signIn } from "../../services/API";
 import { AuthContext } from "../../provider/auth";
+import AlertBOX from "../../services/alert";
 
 export default function Login() {
     const [login, setLogin] = useState([]);
     const [send, setSend] = useState(false);
     const { user, setUser } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    // ---------------------------------------------
+    const [show, setShow] = useState(false);
+    const [info, setInfo] = useState('');
+    const [confirmMessage, setConfirmMessage] = useState('');
+    const [action, setAction] = useState();
+    const [secButton, setSecButton] = useState({});
+    // ---------------------------------------------
 
     function makeLogin({ value, name }) {
         setLogin({
@@ -41,7 +50,21 @@ export default function Login() {
                         navigate("/home");
                     }
                 })
-                .catch(() => console.log("Deu Ruim"))
+                .catch(() => {
+                    console.log("Deu Ruim")
+                    // ---------------------------------------------
+                    setInfo('Ops! Parece que não conseguimos conectar você no site...');
+                    setConfirmMessage('Tudo bem, vou tentar de novo');
+                    setAction(() => function () {
+                        document.location.reload()
+                    })
+                    setSecButton({
+                        ...secButton,
+                        show: false
+                    });
+                    setShow(true);
+                    // ---------------------------------------------
+                })
         }
     }, [send]);
 
@@ -68,6 +91,7 @@ export default function Login() {
                 <Button type="submit">ENTRAR</Button>
             </Form>
             <Register onClick={() => navigate('/sign-up')}>Não possuí uma conta? Cadastre-se</Register>
+            <AlertBOX show={show} action={action} info={info} confirmMessage={confirmMessage} secButton={secButton} />
         </Container>
     )
 }
