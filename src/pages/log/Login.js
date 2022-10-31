@@ -91,7 +91,7 @@ export default function Login() {
                 <Button type="submit">ENTRAR</Button>
             </Form>
             <Register onClick={() => navigate('/sign-up')}>Não possuí uma conta? Cadastre-se</Register>
-            <AlertBOX show={show} action={action} info={info} confirmMessage={confirmMessage} secButton={secButton} />
+            <Background show={show}><AlertBOX show={show} action={action} info={info} confirmMessage={confirmMessage} secButton={secButton} /></Background>
         </Container>
     )
 }
@@ -159,4 +159,16 @@ const Register = styled.p`
     &:hover {
         color: #1F87EE;
     }
+`
+
+const Background = styled.div`
+    height: 100vh;
+    width: 100vw;
+    background-color: #00000086;
+
+    display: ${props => props.show ? 'block' : 'none'};
+
+    position: fixed;
+    top: 0;
+    left: 0;
 `
