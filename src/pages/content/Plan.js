@@ -21,7 +21,6 @@ export default function Plan() {
     const [info, setInfo] = useState('');
     const [confirmMessage, setConfirmMessage] = useState('');
     const [action, setAction] = useState();
-    const [doAction, setDoAction] = useState()
     const [secButton, setSecButton] = useState({});
     // ---------------------------------------------
 
@@ -38,15 +37,14 @@ export default function Plan() {
             subscribePlan(sub, user.token)
                 .then(res => {
                     console.log(res.data)
-                    navigate('/');
+                    navigate('/home');
                 })
                 .catch(err => {
                     console.log(err)
                     // ---------------------------------------------
                     setInfo('Ops... Acho que deu algum problema no seu pedido');
                     setConfirmMessage('Tudo bem, vou tentar de novo');
-                    setDoAction(() => setShow(false))
-                    setAction(doAction)
+                    setAction(() => function () {setShow(false)})
                     setSecButton({
                         ...secButton,
                         show: false
@@ -69,7 +67,7 @@ export default function Plan() {
         // ---------------------------------------------
         setInfo(`Tem certeza que deseja assinar o plano ${plan.name} (${plan.price})?`);
         setConfirmMessage('SIM');
-        setAction(() => setSend(true))
+        setAction(() => function () {setSend(true)})
         setSecButton({
             ...secButton,
             show: true,
