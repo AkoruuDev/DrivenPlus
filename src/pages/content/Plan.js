@@ -1,13 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components";
 import { AuthContext } from "../../provider/auth";
-import { showPlan } from "../../services/API";
+import { showPlan, subscribePlan } from "../../services/API";
 
 export default function Plan() {
-    const [plan, setPLan] = useState(undefined);
     const { PLAN_ID } = useParams();
     const { user } = useContext(AuthContext);
+    const [plan, setPLan] = useState(undefined);
+    const [send, setSend] = useState(false);
+    const [sub, setSub] = useState({membershipId: Number(PLAN_ID)});
+    const navigate = useNavigate();
 
     useEffect(() => {
         showPlan(PLAN_ID, user.token)
@@ -16,11 +19,35 @@ export default function Plan() {
             })
             .catch(err => console.log(err))
     }, [])
+
+    useEffect(() => {
+        if (send) {
+            subscribePlan(sub, user.token)
+                .then(res => {
+                    console.log(res.data)
+                    navigate('/');
+                })
+                .catch(err => console.log(err))
+        }
+    }, [send])
+
+    function subscribe({ value, name }) {
+        setSub({
+          ...sub,
+          [name]: value
+        });
+    }
+
+    function submitThis(event) {
+        event.preventDefault();
+        setSend(true)
+    }
     
     if (plan === undefined) {
         return(<Container><Title>Loading...</Title></Container>)
     }
 
+    console.log(sub)
     return(
         <>
             {plan !== {} ?
@@ -33,14 +60,38 @@ export default function Plan() {
                         <InfoTitle>Preço:</InfoTitle>
                         <Text>R$ {plan.price} cobrados mensalmente</Text>
                     </InfoBox>
-                    <Form>
-                        <Input type="text" name="buyerName" placeholder="nome impresso no cartão" />
-                        <Input type="text" name="buyerName" placeholder="Digitos do cartão" />
+                    <Form onSubmit={submitThis}>
+                        <Input type="text" name="cardName" onChange=
+                            {(e) => subscribe({
+                                    name: e.target.name,
+                                    value: e.target.value
+                                })
+                            }
+                        placeholder="nome impresso no cartão" />
+                        <Input type="text" name="cardNumber" onChange=
+                            {(e) => subscribe({
+                                    name: e.target.name,
+                                    value: e.target.value
+                                })
+                            }
+                        placeholder="Digitos do cartão" />
                         <div>
-                            <Input type="text" name="buyerName" placeholder="CVV" />
-                            <Input type="text" name="buyerName" placeholder="Validade" />
+                            <Input type="password" name="securityNumber" onChange=
+                                {(e) => subscribe({
+                                        name: e.target.name,
+                                        value: Number(e.target.value)
+                                    })
+                                }
+                            placeholder="CVV" />
+                            <Input type="month" name="expirationDate" onChange=
+                                {(e) => subscribe({
+                                        name: e.target.name,
+                                        value: e.target.value
+                                    })
+                                }
+                            placeholder="Validade" />
                         </div>
-                        <Button>ASSINAR</Button>
+                        <Button type="submit">ASSINAR</Button>
                     </Form>
                 </Container>
             : ""}
