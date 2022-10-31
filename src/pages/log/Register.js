@@ -3,11 +3,20 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo-name.svg";
 import { signUp } from "../../services/API";
+import AlertBOX from "../../services/alert";
 
 export default function Register() {
     const [register, setRegister] = useState([]);
     const [send, setSend] = useState(false);
     const navigate = useNavigate();
+
+    // ---------------------------------------------
+    const [show, setShow] = useState(false);
+    const [info, setInfo] = useState('');
+    const [confirmMessage, setConfirmMessage] = useState('');
+    const [action, setAction] = useState();
+    const [secButton, setSecButton] = useState({});
+    // ---------------------------------------------
 
     function createRegister({ value, name }) {
         setRegister({
@@ -23,7 +32,21 @@ export default function Register() {
                     console.log(res.data)
                     navigate("/")
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err)
+                    // ---------------------------------------------
+                    setInfo('Ops! Parece que não conseguimos cadastrar você no Driven+ ...');
+                    setConfirmMessage('Tudo bem, vou tentar de novo');
+                    setAction(() => function () {
+                        document.location.reload()
+                    })
+                    setSecButton({
+                        ...secButton,
+                        show: false
+                    });
+                    setShow(true);
+                    // ---------------------------------------------
+                })
         }
     }, [send])
 
@@ -68,6 +91,7 @@ export default function Register() {
                 <Button type="submit">CADASTRAR</Button>
             </Form>
             <Login onClick={() => navigate('/')}>Já possuí uma conta? Entre</Login>
+            <Background show={show}><AlertBOX show={show} action={action} info={info} confirmMessage={confirmMessage} secButton={secButton} /></Background>
         </Container>
     )
 }
@@ -135,4 +159,16 @@ const Login = styled.p`
     &:hover {
         color: #1F87EE;
     }
+`
+
+const Background = styled.div`
+    height: 100vh;
+    width: 100vw;
+    background-color: #00000086;
+
+    display: ${props => props.show ? 'block' : 'none'};
+
+    position: fixed;
+    top: 0;
+    left: 0;
 `
